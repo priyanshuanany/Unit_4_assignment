@@ -6,7 +6,7 @@ app.use(express.json());
 
 //connect MongoDb
 const connect= ()=>{
-    return mongoose.connect("mongodb://127.0.0.1:27017/relationship");
+    return mongoose.connect("mongodb+srv://prianany:9507710387@cluster0.zmr5f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 }
 
 //Create Schema for Section
@@ -48,9 +48,7 @@ const authorSchema= new mongoose.Schema({
 const Author= mongoose.model("author", authorSchema);
 
 
-//************************************************************* CRUD SECTION ****************************************************************
 
-//GET:=================================================================================================================
 
 app.get("/section", async(req, res)=>{
     try {
@@ -73,10 +71,9 @@ app.get("/books", async(req, res)=>{
 });
 
 
-// Getting Books in a section:
 app.get("/books/:id", async(req, res)=>{
     try {
-        // console.log(req.params.id)
+        
         const bookbyid= await Book.find({sectionId:req.params.id}).lean().exec();
 
         res.send(bookbyid);
@@ -86,11 +83,11 @@ app.get("/books/:id", async(req, res)=>{
 })
 
 
-// Getting all the books by Author:
+
 app.get("/authors", async(req, res)=>{
     try {
         const authorssData= await Author.find({}).populate({path:"bookId", select:"name", populate:{path:"sectionId", select:"genre"}}).lean().exec();
-        // console.log(sectionData);
+        
         res.status(200).send(authorssData)
     } catch (error) {
         console.log(error);
@@ -99,7 +96,6 @@ app.get("/authors", async(req, res)=>{
 });
 
 
-//POST:========================================================================================================================
 
 
 app.post("/section", async(req, res)=>{
@@ -132,7 +128,7 @@ app.post("/authors", async(req, res)=>{
     }
 })
 
-//PATCH==========================================================================================================================
+
 
 app.patch("/books/:id", async(req, res)=>{
     try {
@@ -172,7 +168,7 @@ app.patch("/authors/:id", async(req, res)=>{
     }
 })
 
-//DELETE:======================================================================================================================
+
 
 app.delete("/books/:id", async(req, res)=>{
     try {
@@ -205,13 +201,13 @@ app.delete("/authors/:id", async(req, res)=>{
 })
 
 
-//PORT:==========================================================================================================================================
 
-app.listen(9000, async()=>{
+
+app.listen(5500, async()=>{
     try {
         await connect();
     } catch (error) {
         console.log(error);
     }
-    console.log("Listening to port 9000")
+    console.log("Listening to port 5500")
 });

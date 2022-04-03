@@ -1,7 +1,7 @@
 const mongoose= require("mongoose")
 
 const connectDb = () => {
-    return mongoose.connect("mongodb://127.0.0.1:27017/mcv");
+    return mongoose.connect("mongodb+srv://prianany:9507710387@cluster0.zmr5f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 }
 
 module.exports = connectdb;
